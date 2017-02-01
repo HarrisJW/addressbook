@@ -1,0 +1,5 @@
+language:jaca
+install:
+- mvn install
+jdk:
+- oraclejdk8
