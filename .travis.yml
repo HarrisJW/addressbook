@@ -1,4 +1,4 @@
-language:jaca
+language: java
 install:
 - mvn install
 jdk:
