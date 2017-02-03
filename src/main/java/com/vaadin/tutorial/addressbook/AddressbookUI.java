@@ -3,6 +3,7 @@ package com.vaadin.tutorial.addressbook;
 // JONATHAN HARRIS B00418947
 // Dummy change to allow for commit and push.
 // Another dummy change to allow for commit and push.
+// Changed Heroku API key - last attempt complained of bad credentials.
 
 import javax.servlet.annotation.WebServlet;
 
