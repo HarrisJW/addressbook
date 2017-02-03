@@ -13,23 +13,48 @@ import java.util.Date;
  */
 // Backend DTO class. This is just a typical Java backend implementation
 // class and nothing Vaadin specific.
-public class Contact implements Serializable, Cloneable {
+public class ToDoItem implements Serializable, Cloneable {
 
-    private Long id;
-
+	private Long id;
+	
     private String firstName = "";
     private String lastName = "";
-    private String phone = "";
-    private String email = "";
-    private Date birthDate;
-
-    public Long getId() {
-        return id;
+    private String Task = "";
+	private Date StartDate;
+    private Date ExpectedEndDate;
+    
+   	public Long getId(){
+    	
+    	return id;
     }
-
+    
     public void setId(Long id) {
         this.id = id;
-    }
+}
+    
+    public String getTask() {
+		return Task;
+	}
+
+	public void setTask(String task) {
+		Task = task;
+	}
+
+	public Date getStartDate() {
+		return StartDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		StartDate = startDate;
+	}
+
+	public Date getExpectedEndDate() {
+		return ExpectedEndDate;
+	}
+
+	public void setExpectedEndDate(Date expectedEndDate) {
+		ExpectedEndDate = expectedEndDate;
+	}
 
     public String getFirstName() {
         return firstName;
@@ -47,34 +72,10 @@ public class Contact implements Serializable, Cloneable {
         this.lastName = lastName;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Date getBirthDate() {
-        return birthDate;
-    }
-
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
-
     @Override
-    public Contact clone() throws CloneNotSupportedException {
+    public ToDoItem clone() throws CloneNotSupportedException {
         try {
-            return (Contact) BeanUtils.cloneBean(this);
+            return (ToDoItem) BeanUtils.cloneBean(this);
         } catch (Exception ex) {
             throw new CloneNotSupportedException();
         }
@@ -82,9 +83,9 @@ public class Contact implements Serializable, Cloneable {
 
     @Override
     public String toString() {
-        return "Contact{" + "id=" + id + ", firstName=" + firstName
-                + ", lastName=" + lastName + ", phone=" + phone + ", email="
-                + email + ", birthDate=" + birthDate + '}';
+        return "ToDoItem{" + "firstName=" + firstName
+                + ", lastName=" + lastName + ", Task=" + Task + ", StartDate"
+                + StartDate + ", ExpectedEndDate=" + ExpectedEndDate + '}';
     }
 
 }

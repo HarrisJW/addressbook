@@ -20,10 +20,13 @@ public class ContactService {
             "Nina", "Alex", "Rita", "Dan", "Umberto", "Henrik", "Rene", "Lisa",
             "Linda", "Timothy", "Daniel", "Brian", "George", "Scott",
             "Jennifer" };
+    
     static String[] lnames = { "Smith", "Johnson", "Williams", "Jones",
             "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor",
             "Anderson", "Thomas", "Jackson", "White", "Harris", "Martin",
             "Thompson", "Young", "King", "Robinson" };
+    
+    static String[] tasks = { "Groceries", "Gas", "Cat food", "Drop off kids"};
 
     private static ContactService instance;
 
@@ -35,16 +38,19 @@ public class ContactService {
             Random r = new Random(0);
             Calendar cal = Calendar.getInstance();
             for (int i = 0; i < 100; i++) {
-                Contact contact = new Contact();
-                contact.setFirstName(fnames[r.nextInt(fnames.length)]);
-                contact.setLastName(lnames[r.nextInt(fnames.length)]);
-                contact.setEmail(contact.getFirstName().toLowerCase() + "@"
-                        + contact.getLastName().toLowerCase() + ".com");
-                contact.setPhone("+ 358 555 " + (100 + r.nextInt(900)));
+                ToDoItem todo = new ToDoItem();
+                todo.setFirstName(fnames[r.nextInt(fnames.length)]);
+                todo.setLastName(lnames[r.nextInt(fnames.length)]);
+                todo.setTask(tasks[r.nextInt(tasks.length)]);
                 cal.set(1930 + r.nextInt(70),
                         r.nextInt(11), r.nextInt(28));
-                contact.setBirthDate(cal.getTime());
-                contactService.save(contact);
+                todo.setStartDate(cal.getTime());
+                
+                cal.set(1930 + r.nextInt(70),
+                        r.nextInt(11), r.nextInt(28));
+                todo.setExpectedEndDate(cal.getTime());
+                
+                contactService.save(todo);
             }
             instance = contactService;
         }
@@ -52,12 +58,12 @@ public class ContactService {
         return instance;
     }
 
-    private HashMap<Long, Contact> contacts = new HashMap<>();
+    private HashMap<Long, ToDoItem> contacts = new HashMap<>();
     private long nextId = 0;
 
-    public synchronized List<Contact> findAll(String stringFilter) {
+    public synchronized List<ToDoItem> findAll(String stringFilter) {
         ArrayList arrayList = new ArrayList();
-        for (Contact contact : contacts.values()) {
+        for (ToDoItem contact : contacts.values()) {
             try {
                 boolean passesFilter = (stringFilter == null || stringFilter.isEmpty())
                         || contact.toString().toLowerCase()
@@ -70,10 +76,10 @@ public class ContactService {
                         Level.SEVERE, null, ex);
             }
         }
-        Collections.sort(arrayList, new Comparator<Contact>() {
+        Collections.sort(arrayList, new Comparator<ToDoItem>() {
 
             @Override
-            public int compare(Contact o1, Contact o2) {
+            public int compare(ToDoItem o1, ToDoItem o2) {
                 return (int) (o2.getId() - o1.getId());
             }
         });
@@ -84,16 +90,16 @@ public class ContactService {
         return contacts.size();
     }
 
-    public synchronized void delete(Contact value) {
+    public synchronized void delete(ToDoItem value) {
         contacts.remove(value.getId());
     }
 
-    public synchronized void save(Contact entry) {
+    public synchronized void save(ToDoItem entry) {
         if (entry.getId() == null) {
             entry.setId(nextId++);
         }
         try {
-            entry = (Contact) BeanUtils.cloneBean(entry);
+            entry = (ToDoItem) BeanUtils.cloneBean(entry);
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }

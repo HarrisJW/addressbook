@@ -1,7 +1,7 @@
 package com.vaadin.tutorial.addressbook;
 
 import com.vaadin.event.ShortcutAction;
-import com.vaadin.tutorial.addressbook.backend.Contact;
+import com.vaadin.tutorial.addressbook.backend.ToDoItem;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -27,14 +27,14 @@ public class ContactForm extends FormLayout {
     Button cancel = new Button("Cancel", this::cancel);
     TextField firstName = new TextField("First name");
     TextField lastName = new TextField("Last name");
-    TextField phone = new TextField("Phone");
-    TextField email = new TextField("Email");
-    DateField birthDate = new DateField("Birth date");
+    TextField task = new TextField("Task");
+    DateField startDate = new DateField("Start date");
+    DateField expectedEndDate = new DateField("Expected End Date");
 
-    Contact contact;
+    ToDoItem contact;
 
     // Easily bind forms to beans and manage validation and buffering
-    BeanFieldGroup<Contact> formFieldBindings;
+    BeanFieldGroup<ToDoItem> formFieldBindings;
 
     public ContactForm() {
         configureComponents();
@@ -60,7 +60,7 @@ public class ContactForm extends FormLayout {
         HorizontalLayout actions = new HorizontalLayout(save, cancel);
         actions.setSpacing(true);
 
-        addComponents(actions, firstName, lastName, phone, email, birthDate);
+        addComponents(actions, firstName, lastName, task, startDate, expectedEndDate);
     }
 
     /*
@@ -97,7 +97,7 @@ public class ContactForm extends FormLayout {
         getUI().contactList.select(null);
     }
 
-    void edit(Contact contact) {
+    void edit(ToDoItem contact) {
         this.contact = contact;
         if (contact != null) {
             // Bind the properties of the contact POJO to fiels in this form

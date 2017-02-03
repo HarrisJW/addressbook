@@ -1,9 +1,6 @@
 package com.vaadin.tutorial.addressbook;
 
 // JONATHAN HARRIS B00418947
-// Dummy change to allow for commit and push.
-// Another dummy change to allow for commit and push.
-// Changed Heroku API key - last attempt complained of bad credentials.
 
 import javax.servlet.annotation.WebServlet;
 
@@ -13,7 +10,7 @@ import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.tutorial.addressbook.backend.Contact;
+import com.vaadin.tutorial.addressbook.backend.ToDoItem;
 import com.vaadin.tutorial.addressbook.backend.ContactService;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
@@ -29,6 +26,7 @@ import com.vaadin.v7.ui.TextField;
  * By default, a new UI instance is automatically created when the page is loaded. To reuse
  * the same instance, add @PreserveOnRefresh.
  */
+
 @Title("Addressbook")
 @Theme("valo")
 @Widgetset("com.vaadin.v7.Vaadin7WidgetSet")
@@ -74,20 +72,18 @@ public class AddressbookUI extends UI {
          * to synchronously handle those events. Vaadin automatically sends only
          * the needed changes to the web page without loading a new page.
          */
-        newContact.addClickListener(e -> contactForm.edit(new Contact()));
+        newContact.addClickListener(e -> contactForm.edit(new ToDoItem()));
 
         filter.setInputPrompt("Filter contacts...");
         filter.addTextChangeListener(e -> refreshContacts(e.getText()));
 
         contactList
-                .setContainerDataSource(new BeanItemContainer<>(Contact.class));
-        contactList.setColumnOrder("firstName", "lastName", "email");
+                .setContainerDataSource(new BeanItemContainer<>(ToDoItem.class));
+        contactList.setColumnOrder("firstName", "lastName", "task", "startDate", "expectedEndDate");
         contactList.removeColumn("id");
-        contactList.removeColumn("birthDate");
-        contactList.removeColumn("phone");
         contactList.setSelectionMode(Grid.SelectionMode.SINGLE);
         contactList.addSelectionListener(
-                e -> contactForm.edit((Contact) contactList.getSelectedRow()));
+                e -> contactForm.edit((ToDoItem) contactList.getSelectedRow()));
         refreshContacts();
     }
 
@@ -135,7 +131,7 @@ public class AddressbookUI extends UI {
 
     private void refreshContacts(String stringFilter) {
         contactList.setContainerDataSource(new BeanItemContainer<>(
-                Contact.class, service.findAll(stringFilter)));
+                ToDoItem.class, service.findAll(stringFilter)));
         contactForm.setVisible(false);
     }
 
