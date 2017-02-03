@@ -47,7 +47,7 @@ public class ContactService {
                         r.nextInt(11), r.nextInt(28));
                 todo.setStartDate(cal.getTime());
                 
-                cal.set((cal.getTime().getYear() + r.nextInt(2)), // Randomly add 0-2 years
+                cal.set((2017 + r.nextInt(2)), // Randomly add 0-2 years
                         (cal.getTime().getMonth() + r.nextInt(6)), // Randomly add 0-6 months
                         (cal.getTime().getDay() + r.nextInt(15))); // Randomly add 0-15 days
                 
