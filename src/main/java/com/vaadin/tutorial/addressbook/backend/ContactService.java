@@ -26,7 +26,8 @@ public class ContactService {
             "Anderson", "Thomas", "Jackson", "White", "Harris", "Martin",
             "Thompson", "Young", "King", "Robinson" };
     
-    static String[] tasks = { "Groceries", "Gas", "Cat food", "Drop off kids"};
+    static String[] tasks = { "Refactor UI code", "Add comments to backend", "Modify user stories", 
+    		"Integrate eclipse with TravisCI and Heroku."};
 
     private static ContactService instance;
 
@@ -42,12 +43,14 @@ public class ContactService {
                 todo.setFirstName(fnames[r.nextInt(fnames.length)]);
                 todo.setLastName(lnames[r.nextInt(fnames.length)]);
                 todo.setTask(tasks[r.nextInt(tasks.length)]);
-                cal.set(1930 + r.nextInt(70),
+                cal.set(2017,
                         r.nextInt(11), r.nextInt(28));
                 todo.setStartDate(cal.getTime());
                 
-                cal.set(1930 + r.nextInt(70),
-                        r.nextInt(11), r.nextInt(28));
+                cal.set((cal.getTime().getYear() + r.nextInt(2)), // Randomly add 0-2 years
+                        (cal.getTime().getMonth() + r.nextInt(6)), // Randomly add 0-6 months
+                        (cal.getTime().getDay() + r.nextInt(15))); // Randomly add 0-15 days
+                
                 todo.setExpectedEndDate(cal.getTime());
                 
                 contactService.save(todo);

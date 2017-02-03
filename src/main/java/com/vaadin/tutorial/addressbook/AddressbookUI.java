@@ -1,6 +1,6 @@
 package com.vaadin.tutorial.addressbook;
 
-// JONATHAN HARRIS B00418947
+// JONATHAN HARRIS
 
 import javax.servlet.annotation.WebServlet;
 
@@ -27,7 +27,7 @@ import com.vaadin.v7.ui.TextField;
  * the same instance, add @PreserveOnRefresh.
  */
 
-@Title("Addressbook")
+@Title("ToDoList")
 @Theme("valo")
 @Widgetset("com.vaadin.v7.Vaadin7WidgetSet")
 public class AddressbookUI extends UI {
@@ -40,8 +40,8 @@ public class AddressbookUI extends UI {
      * vaadin.com/directory.
      */
     TextField filter = new TextField();
-    Grid contactList = new Grid();
-    Button newContact = new Button("New contact");
+    Grid toDoList = new Grid();
+    Button newToDoItem = new Button("New To Do Item");
 
     // ContactForm is an example of a custom component class
     ContactForm contactForm = new ContactForm();
@@ -72,18 +72,18 @@ public class AddressbookUI extends UI {
          * to synchronously handle those events. Vaadin automatically sends only
          * the needed changes to the web page without loading a new page.
          */
-        newContact.addClickListener(e -> contactForm.edit(new ToDoItem()));
+        newToDoItem.addClickListener(e -> contactForm.edit(new ToDoItem()));
 
         filter.setInputPrompt("Filter contacts...");
         filter.addTextChangeListener(e -> refreshContacts(e.getText()));
 
-        contactList
+        toDoList
                 .setContainerDataSource(new BeanItemContainer<>(ToDoItem.class));
-        contactList.setColumnOrder("firstName", "lastName", "task", "startDate", "expectedEndDate");
-        contactList.removeColumn("id");
-        contactList.setSelectionMode(Grid.SelectionMode.SINGLE);
-        contactList.addSelectionListener(
-                e -> contactForm.edit((ToDoItem) contactList.getSelectedRow()));
+        toDoList.setColumnOrder("firstName", "lastName", "task", "startDate", "expectedEndDate");
+        toDoList.removeColumn("id");
+        toDoList.setSelectionMode(Grid.SelectionMode.SINGLE);
+        toDoList.addSelectionListener(
+                e -> contactForm.edit((ToDoItem) toDoList.getSelectedRow()));
         refreshContacts();
     }
 
@@ -99,15 +99,15 @@ public class AddressbookUI extends UI {
      * choose to setup layout declaratively with Vaadin Designer, CSS and HTML.
      */
     private void buildLayout() {
-        HorizontalLayout actions = new HorizontalLayout(filter, newContact);
+        HorizontalLayout actions = new HorizontalLayout(filter, newToDoItem);
         actions.setWidth("100%");
         filter.setWidth("100%");
         actions.setExpandRatio(filter, 1);
 
-        VerticalLayout left = new VerticalLayout(actions, contactList);
+        VerticalLayout left = new VerticalLayout(actions, toDoList);
         left.setSizeFull();
-        contactList.setSizeFull();
-        left.setExpandRatio(contactList, 1);
+        toDoList.setSizeFull();
+        left.setExpandRatio(toDoList, 1);
 
         HorizontalLayout mainLayout = new HorizontalLayout(left, contactForm);
         mainLayout.setSizeFull();
@@ -130,7 +130,7 @@ public class AddressbookUI extends UI {
     }
 
     private void refreshContacts(String stringFilter) {
-        contactList.setContainerDataSource(new BeanItemContainer<>(
+        toDoList.setContainerDataSource(new BeanItemContainer<>(
                 ToDoItem.class, service.findAll(stringFilter)));
         contactForm.setVisible(false);
     }
