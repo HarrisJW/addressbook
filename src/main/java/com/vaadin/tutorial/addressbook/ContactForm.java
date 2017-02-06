@@ -23,15 +23,19 @@ import com.vaadin.v7.ui.TextField;
  */
 public class ContactForm extends FormLayout {
 
+	// Modified buttons.
     Button save = new Button("Save", this::save);
     Button cancel = new Button("Cancel", this::cancel);
     Button delete = new Button("Delete", this::delete);
+    
+    // Added new fields as appropriate.
     TextField firstName = new TextField("First name");
     TextField lastName = new TextField("Last name");
     TextField task = new TextField("Task");
     DateField startDate = new DateField("Start date");
     DateField expectedEndDate = new DateField("Expected End Date");
 
+    // Represents the currently selected contact.
     ToDoItem contact;
 
     // Easily bind forms to beans and manage validation and buffering
@@ -101,6 +105,7 @@ public class ContactForm extends FormLayout {
     
     public void delete(Button.ClickEvent event) {
     	
+    	// Get information about the to do item we are about to delete.
     	String firstName = contact.getFirstName();
     	String lastName = contact.getLastName();
         
