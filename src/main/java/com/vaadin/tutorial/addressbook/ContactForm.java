@@ -25,6 +25,7 @@ public class ContactForm extends FormLayout {
 
     Button save = new Button("Save", this::save);
     Button cancel = new Button("Cancel", this::cancel);
+    Button delete = new Button("Delete", this::delete);
     TextField firstName = new TextField("First name");
     TextField lastName = new TextField("Last name");
     TextField task = new TextField("Task");
@@ -57,7 +58,7 @@ public class ContactForm extends FormLayout {
         setSizeUndefined();
         setMargin(true);
 
-        HorizontalLayout actions = new HorizontalLayout(save, cancel);
+        HorizontalLayout actions = new HorizontalLayout(save, delete, cancel);
         actions.setSpacing(true);
 
         addComponents(actions, firstName, lastName, task, startDate, expectedEndDate);
@@ -76,6 +77,7 @@ public class ContactForm extends FormLayout {
      */
     public void save(Button.ClickEvent event) {
         try {
+        	
             // Commit the fields from UI to DAO
             formFieldBindings.commit();
 
@@ -95,6 +97,28 @@ public class ContactForm extends FormLayout {
         // Place to call business logic.
         Notification.show("Cancelled", Type.TRAY_NOTIFICATION);
         getUI().toDoList.select(null);
+    }
+    
+    public void delete(Button.ClickEvent event) {
+    	
+    	String firstName = contact.getFirstName();
+    	String lastName = contact.getLastName();
+        
+        // Delete the current contact (already selected through call to edit).
+        getUI().service.delete(contact);
+        
+        // This was the sticking point. Changes are not reflected until calling
+        // getUI().refreshContacts() , as below.
+        
+        getUI().refreshContacts();
+        
+        // Point current contact at null.
+        getUI().toDoList.select(null);
+        
+    	// Let user know what we've done.
+        Notification.show(firstName + " " + lastName + " deleted", 
+        		Type.TRAY_NOTIFICATION);
+   
     }
 
     void edit(ToDoItem contact) {
