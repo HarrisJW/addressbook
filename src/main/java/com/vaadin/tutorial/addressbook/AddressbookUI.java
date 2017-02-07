@@ -74,7 +74,7 @@ public class AddressbookUI extends UI {
          */
         newToDoItem.addClickListener(e -> contactForm.edit(new ToDoItem()));
 
-        filter.setInputPrompt("Filter contacts...");
+        filter.setInputPrompt("Filter to do items...");
         filter.addTextChangeListener(e -> refreshContacts(e.getText()));
 
         toDoList
