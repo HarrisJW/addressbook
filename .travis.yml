@@ -10,4 +10,4 @@ deploy:
   app: addressbook-jwh
   on:
     repo: HarrisJW/addressbook
-    branch: todo_tasks
+    branch: master
