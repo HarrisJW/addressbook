@@ -103,6 +103,8 @@ public class ContactForm extends FormLayout {
         getUI().toDoList.select(null);
     }
     
+    // The implementation of this method allows for the delete functionality requested in
+    // assignment description.
     public void delete(Button.ClickEvent event) {
     	
     	// Get information about the to do item we are about to delete.
